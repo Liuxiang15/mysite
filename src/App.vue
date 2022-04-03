@@ -1,21 +1,29 @@
 <template>
   <div id="app">
     <h1>APP组件</h1>
-    <Avatar
-      url="	https://p26-passport.byteacctimg.com/img/user-avatar/f92b36365b9b2b3fe572c0e5082dcfeb~300x300.image"
-      :size="100"
-    />
-    <Icon type="home" />
+
+    <Pager :total="total" :current="current" @pageChange="handlePageChange" />
   </div>
 </template>
 <script>
-import Avatar from './components/Avatar.vue'
-import Icon from './components/Icon'
+import Pager from './components/Pager.vue'
 export default {
   name: 'App',
   components: {
-    Avatar,
-    Icon
+    Pager
+  },
+  data () {
+    return {
+      total: 302,
+      current: 1
+    }
+
+  },
+  methods: {
+    handlePageChange (newPage) {
+      this.current = newPage
+      console.log('加载当前数据')
+    }
   }
 }
 </script>
