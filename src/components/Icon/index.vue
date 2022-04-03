@@ -1,5 +1,5 @@
 <template>
-  <i class="iconfont icon-continer" :class="fontClass"></i>
+  <i class="iconfont icon-container" :class="fontClass"></i>
 </template>
 
 <script>
@@ -22,22 +22,27 @@ const classMap = {
   empty: "iconempty",
   chat: "iconliuyan",
 };
+export const types = Object.keys(classMap);
 export default {
   props: {
     type: {
       type: String,
-      required: false
-    }
+      required: true,
+    },
   },
   computed: {
+    // 图标类样式
     fontClass () {
-      return classMap[this.type]
-    }
-  }
-
-}
+      return classMap[this.type];
+    },
+  },
+};
 </script>
 
 <style scoped>
 @import '//at.alicdn.com/t/font_2164449_nalfgtq7il.css';
+.iconfont {
+  color: inherit;
+  font-size: inherit;
+}
 </style>
