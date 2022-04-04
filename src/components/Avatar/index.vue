@@ -26,7 +26,7 @@ export default {
 
 <style scoped>
 /* 带有作用域的样式 */
-.avatar-img {
+.avatar-container {
   border-radius: 50%;
   /* 保持原有尺寸比例,避免拉伸。但部分内容可能被剪切。 */
   object-fit: cover;
