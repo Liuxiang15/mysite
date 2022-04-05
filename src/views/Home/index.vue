@@ -1,5 +1,10 @@
 <template>
-  <div class="home-container" ref="container" @wheel="handleWheel">
+  <div
+    v-loading="isLoading"
+    class="home-container"
+    ref="container"
+    @wheel="handleWheel"
+  >
     <ul
       class="carousel-container"
       :style="{
@@ -7,7 +12,7 @@
       }"
       @transitionend="handleTransitionEnd"
     >
-      <li v-for="item in banners" :key="item.id">
+      <li v-for="(item, i) in banners" :key="item.id">
         <CarouselItem :carousel="item" />
       </li>
     </ul>
@@ -44,6 +49,14 @@
   position: relative;
   // 触发BFC 避免外边距合并
   overflow: hidden;
+
+  // 测试
+  // width: 60%;
+  // height: 40%;
+  // overflow: visible;
+  // border: 2px solid #008c8c;
+  // margin: 100px auto;
+
   ul {
     margin: 0;
     list-style: none;
@@ -132,16 +145,16 @@ export default {
   },
   data () {
     return {
+      isLoading: true,
       banners: [],
-      index: 1, // 当前显示的是第几张轮播图
+      index: 0, // 当前显示的是第几张轮播图
       containerHeight: 0, // 整个容器的高度
       switching: false, // 是否正在切换中
     };
   },
-
   async created () {
     this.banners = await getBanners();
-    console.log('created', this.banners)
+    this.isLoading = false;
   },
   mounted () {
     this.containerHeight = this.$refs.container.clientHeight;
