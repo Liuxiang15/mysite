@@ -34,6 +34,23 @@ export default {
     async fetchData () {
       return await getBlog(this.$route.params.id);
     },
+    handleScroll () {
+      this.$bus.$emit("mainScroll", this.$refs.mainContainer);
+    },
+  },
+  mounted () {
+    this.$refs.mainContainer.addEventListener("scroll", this.handleScroll);
+  },
+  destroyed () {
+    this.$refs.mainContainer.removeEventListener("scroll", this.handleScroll);
+  },
+  // 刷新后跳转锚链接
+  updated () {
+    const hash = location.hash;
+    location.hash = "";
+    setTimeout(() => {
+      location.hash = hash;
+    }, 50);
   },
 };
 </script>
