@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <div class="main-container" v-loading="isLoading">
+    <div ref="mainContainer" class="main-container" v-loading="isLoading">
       <BlogDetail :blog="data" v-if="data" />
       <!-- 先加载文章,再加载评论 -->
       <BlogComment v-if="!isLoading" />
