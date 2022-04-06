@@ -4,7 +4,7 @@
     <div class="aside">
       <span>日期: {{ formatDate(blog.createDate) }}</span>
       <span>浏览: {{ blog.scanNumber }}</span>
-      <a href="">评论: {{ blog.commentNumber }}</a>
+      <a href="#data-form-container">评论: {{ blog.commentNumber }}</a>
       <a href="">{{ blog.category.name }}</a>
     </div>
     <!-- 要设置markdown-body才会生效导入的markdown.css -->

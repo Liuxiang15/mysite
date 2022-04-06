@@ -2,6 +2,8 @@
   <Layout>
     <div class="main-container" v-loading="isLoading">
       <BlogDetail :blog="data" v-if="data" />
+      <!-- 先加载文章,再加载评论 -->
+      <BlogComment v-if="!isLoading" />
     </div>
     <template #right>
       <div class="right-container" v-loading="isLoading">
@@ -17,12 +19,15 @@ import { getBlog } from "@/api/blog";
 import Layout from "@/components/Layout";
 import BlogDetail from "./components/BlogDetail";
 import BlogTOC from "./components/BlogTOC";
+import BlogComment from "./components/BlogComment";
+
 
 export default {
   components: {
     Layout,
     BlogDetail,
     BlogTOC,
+    BlogComment,
   },
   mixins: [fetchData(null)],
   methods: {
