@@ -81,6 +81,15 @@ export default {
       };
     },
   },
+  mounted () {
+    this.$bus.$on("setMainScroll", this.handleSetMainScroll);
+    this.$refs.mainContainer.addEventListener("scroll", this.handleScroll);
+  },
+  beforeDestroy () {
+    this.$bus.$emit("mainScroll");
+    this.$refs.mainContainer.removeEventListener("scroll", this.handleScroll);
+    this.$bus.$off("setMainScroll", this.handleSetMainScroll);
+  },
   methods: {
     // 导入的方法
     formatDate,
@@ -114,6 +123,12 @@ export default {
           },
         });
       }
+    },
+    handleScroll () {
+      this.$bus.$emit("mainScroll", this.$refs.mainContainer);
+    },
+    handleSetMainScroll (scrollTop) {
+      this.$refs.mainContainer.scrollTop = scrollTop;
     },
   },
   watch: {
