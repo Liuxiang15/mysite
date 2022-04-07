@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-list-container" ref="container" v-loading="isLoading">
+  <div class="blog-list-container" ref="mainContainer" v-loading="isLoading">
     <ul>
       <li v-for="item in data.rows" :key="item.id">
         <div class="thumb" v-if="item.thumb">
@@ -135,7 +135,7 @@ export default {
     async $route () {
       this.isLoading = true;
       // 滚动高度为0 可以看到loading
-      this.$refs.container.scrollTop = 0;
+      this.$refs.mainContainer.scrollTop = 0;
       this.data = await this.fetchData();
       this.isLoading = false;
     },
