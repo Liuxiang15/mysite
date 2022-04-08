@@ -1,12 +1,14 @@
 <template>
   <div class="site-aside-container">
-    <Avatar
-      url="https://p26-passport.byteacctimg.com/img/user-avatar/f92b36365b9b2b3fe572c0e5082dcfeb~300x300.image"
-    />
-    <h1 class="title">前端小菜鸟</h1>
-    <Menu />
-    <Contact />
-    <p class="footer">备号</p>
+    <!-- 仓库数据先开始为空 -->
+    <template v-if="data">
+      <Avatar :url="data.avatar" />
+      <h1 class="title">{{ data.siteTitle }}</h1>
+      <Menu />
+      <Contact />
+    </template>
+
+    <!-- <p class="footer">备号</p> -->
   </div>
 </template>
 
@@ -14,12 +16,15 @@
 import Avatar from "@/components/Avatar";
 import Menu from "./Menu";
 import Contact from "./Contact";
+import { mapState } from "vuex";
+
 export default {
   components: {
     Avatar,
     Menu,
     Contact,
   },
+  computed: mapState("setting", ["data"]),
 };
 </script>
 

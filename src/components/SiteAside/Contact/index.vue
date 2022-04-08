@@ -1,29 +1,29 @@
 <template>
   <ul class="contact-container">
     <li>
-      <a href="https://github.com/Liuxiang15/" target="_blank">
+      <a :href="data.github" target="_blank">
         <div class="icon">
           <Icon type="github" />
         </div>
-        <span>Liuxiang15</span>
+        <span>{{ data.githubName }}</span>
       </a>
     </li>
     <li>
-      <a href="mailto:thss15_liux@163.com">
+      <a :href="`mailto:${data.mail}`">
         <div class="icon">
           <Icon type="mail" />
         </div>
-        <span>thss15_liux@163</span>
+        <span>{{ data.mail }}</span>
       </a>
     </li>
     <li>
       <a
-        href="tencent://message/?Menu=yes&uin=2321081882&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45"
+        :href="`tencent://message/?Menu=yes&uin=${data.qq}&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45`"
       >
         <div class="icon">
           <Icon type="qq" />
         </div>
-        <span>2321081882</span>
+        <span>{{ data.qq }}</span>
       </a>
     </li>
     <li>
@@ -31,13 +31,10 @@
         <div class="icon weixin">
           <Icon type="weixin" />
         </div>
-        <span>helloworld001</span>
+        <span>{{ data.weixin }}</span>
       </a>
       <div class="pop">
-        <img
-          src="https://xesfile.xesimg.com/programme/python_assets/62b0a895c045d96ff7f411bf419e672d.png"
-          alt=""
-        />
+        <img :src="data.weixinQrCode" alt="" />
       </div>
     </li>
   </ul>
@@ -45,10 +42,13 @@
 
 <script>
 import Icon from "@/components/Icon";
+import { mapState } from "vuex";
+
 export default {
   components: {
     Icon,
   },
+  computed: mapState("setting", ["data"]),
 };
 </script>
 
