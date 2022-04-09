@@ -33,7 +33,13 @@ export default {
   mixins: [fetchData(null), mainScroll("mainContainer")],
   methods: {
     async fetchData () {
-      const res = await getBlog(this.$route.params.id);
+      let res = await getBlog(this.$route.params.id);
+      // res = null; 测试返回数据为空
+      if (!res) {
+        // 文章不存在
+        this.$router.push("/404");
+        return;
+      }
       titleController.setRouteTitle(res.title)
       return res
     },
