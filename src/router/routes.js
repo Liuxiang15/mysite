@@ -1,16 +1,10 @@
-import Home from "@/views/Home";
-import About from "@/views/About";
-import Blog from "@/views/Blog";
-import Project from "@/views/Project";
-import Message from "@/views/Message";
-import BlogDetail from "@/views/Blog/Detail"
-
 // 命名路由:使用命名路由可以解除系统与路径之间的耦合
 // 比如下面的Blog组件，对应的path是/article
-export default [{
+export default [
+  {
     name: "Home",
     path: "/",
-    component: Home,
+    component: () => import(/* webpackChunkName: "home" */ "@/views/Home"),
     meta: {
       title: "首页",
     },
@@ -18,24 +12,23 @@ export default [{
   {
     name: "About",
     path: "/about",
-    component: About,
-     meta: {
+    component: () => import(/* webpackChunkName: "about" */ "@/views/About"),
+    meta: {
       title: "关于我",
-    }
+    },
   },
   {
     name: "Blog",
     path: "/article",
-    component: Blog,
+    component: () => import(/* webpackChunkName: "blog" */ "@/views/Blog"),
     meta: {
       title: "文章",
     },
   },
-  // 动态路由
   {
     name: "CategoryBlog",
     path: "/article/cate/:categoryId",
-    component: Blog,
+    component: () => import(/* webpackChunkName: "blog" */ "@/views/Blog"),
     meta: {
       title: "文章",
     },
@@ -43,7 +36,8 @@ export default [{
   {
     name: "BlogDetail",
     path: "/article/:id",
-    component: BlogDetail,
+    component: () =>
+      import(/* webpackChunkName: "blogdetail" */ "@/views/Blog/Detail"),
     meta: {
       title: "文章详情",
     },
@@ -51,7 +45,8 @@ export default [{
   {
     name: "Project",
     path: "/project",
-    component: Project,
+    component: () =>
+      import(/* webpackChunkName: "project" */ "@/views/Project"),
     meta: {
       title: "项目&效果",
     },
@@ -59,7 +54,8 @@ export default [{
   {
     name: "Message",
     path: "/message",
-    component: Message,
+    component: () =>
+      import(/* webpackChunkName: "message" */ "@/views/Message"),
     meta: {
       title: "留言板",
     },
