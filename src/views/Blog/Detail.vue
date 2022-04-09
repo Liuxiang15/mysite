@@ -21,7 +21,7 @@ import BlogDetail from "./components/BlogDetail";
 import BlogTOC from "./components/BlogTOC";
 import BlogComment from "./components/BlogComment";
 import mainScroll from "../../mixins/mainScroll"
-
+import { titleController } from '@/utils'
 
 export default {
   components: {
@@ -33,7 +33,9 @@ export default {
   mixins: [fetchData(null), mainScroll("mainContainer")],
   methods: {
     async fetchData () {
-      return await getBlog(this.$route.params.id);
+      const res = await getBlog(this.$route.params.id);
+      titleController.setRouteTitle(res.title)
+      return res
     },
     // handleScroll () {
     //   this.$bus.$emit("mainScroll", this.$refs.mainContainer);
