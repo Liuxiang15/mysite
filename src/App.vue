@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <!-- <Layout>
+    <Layout>
       <template #left>
         <div class="aside">
           <SiteAside />
@@ -10,8 +10,8 @@
         <RouterView />
       </template>
     </Layout>
-    <ToTop /> -->
-    <AsyncComponent />
+    <ToTop />
+    <!-- <AsyncComponent /> -->
   </div>
 </template>
 
@@ -46,7 +46,7 @@ export default {
     Layout,
     SiteAside,
     ToTop,
-    AsyncComponent,
+    // AsyncComponent,
   },
 };
 </script>

@@ -1,10 +1,41 @@
+import "nprogress/nprogress.css";
+import { start, done, configure } from "nprogress";
+
+configure({
+  trickleSpeed: 20,
+  showSpinner: false,
+});
+
+function delay(duration) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, duration);
+  });
+}
+
+function getPageComponent(pageCompResolver) {
+  return async () => {
+    start();
+    // vue-cli在打包阶段注入变量，方便在浏览器使用
+    if (process.env.NODE_ENV === "development") {
+      await delay(2000);
+    }
+    const comp = await pageCompResolver();
+    done();
+    return comp;
+  };
+}
+
 // 命名路由:使用命名路由可以解除系统与路径之间的耦合
 // 比如下面的Blog组件，对应的path是/article
 export default [
   {
     name: "Home",
     path: "/",
-    component: () => import(/* webpackChunkName: "home" */ "@/views/Home"),
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "home" */ "@/views/Home")
+    ),
     meta: {
       title: "首页",
     },
@@ -12,7 +43,9 @@ export default [
   {
     name: "About",
     path: "/about",
-    component: () => import(/* webpackChunkName: "about" */ "@/views/About"),
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "about" */ "@/views/About")
+    ),
     meta: {
       title: "关于我",
     },
@@ -20,7 +53,9 @@ export default [
   {
     name: "Blog",
     path: "/article",
-    component: () => import(/* webpackChunkName: "blog" */ "@/views/Blog"),
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "blog" */ "@/views/Blog")
+    ),
     meta: {
       title: "文章",
     },
@@ -28,7 +63,9 @@ export default [
   {
     name: "CategoryBlog",
     path: "/article/cate/:categoryId",
-    component: () => import(/* webpackChunkName: "blog" */ "@/views/Blog"),
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "blog" */ "@/views/Blog")
+    ),
     meta: {
       title: "文章",
     },
@@ -36,8 +73,9 @@ export default [
   {
     name: "BlogDetail",
     path: "/article/:id",
-    component: () =>
-      import(/* webpackChunkName: "blogdetail" */ "@/views/Blog/Detail"),
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "blogdetail" */ "@/views/Blog/Detail")
+    ),
     meta: {
       title: "文章详情",
     },
@@ -45,8 +83,9 @@ export default [
   {
     name: "Project",
     path: "/project",
-    component: () =>
-      import(/* webpackChunkName: "project" */ "@/views/Project"),
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "project" */ "@/views/Project")
+    ),
     meta: {
       title: "项目&效果",
     },
@@ -54,8 +93,9 @@ export default [
   {
     name: "Message",
     path: "/message",
-    component: () =>
-      import(/* webpackChunkName: "message" */ "@/views/Message"),
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "message" */ "@/views/Message")
+    ),
     meta: {
       title: "留言板",
     },
