@@ -13,8 +13,19 @@ export default {
   },
   computed: {
     columns () {
-      // 从内部KTableColumn定义中获取prop和label
-      return this.$slots.default.map(({ data }) => ({ label: data.attrs.label, prop: data.attrs.prop }))
+      // 由于不一定有prop属性，内部如果出现了默认作用域插槽，则按照它渲染
+      return this.$slots.default.map(({ data:{attrs, scopedSlots} }) => {
+        // console.log('columns',data)
+        const column = {...attrs}
+        if(scopedSlots){
+          column.renderCell = (row, i) => <div>{scopedSlots.default({row, $index, i})}</div>
+        } else {
+          column.renderCell = (row) => <div>{row[column.prop]}</div>
+
+        }
+        return column
+      })
+
     },
     rows () {
       return this.data.map(item => {
