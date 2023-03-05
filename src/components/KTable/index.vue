@@ -56,7 +56,8 @@ export default {
   computed: {
     columns () {
       // 由于不一定有prop属性，内部如果出现了默认作用域插槽，则按照它渲染
-      return this.$slots.default.map((vnode) => {
+      return this.$slots.default.filter(vnode => vnode.tag) // 筛选非空格节点
+      .map((vnode) => {
         // console.log('columns vnode', vnode)
         // 注意这个scopedSlots指的是在<k-table-culumn></k-table-culumn>中自定义的那个插槽内容
         const { attrs, scopedSlots } = vnode.data;
