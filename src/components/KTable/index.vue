@@ -14,12 +14,13 @@ export default {
     }
   },
   created () {
+    // console.log('in created', this.orderBy) // undefined
     this.columns.forEach(column => {
       // 初始化排序字段orderField
       // 如果存在sortable列，则头一个作为默认排序字段
       if (column.hasOwnProperty('sortable')) {
         if (column.prop && !this.orderField) {
-          this.orderField = column.prop
+          this.sort(column.prop, 'desc')
         }
       }
     })
@@ -27,6 +28,30 @@ export default {
   data () {
     return {
     };
+  },
+  methods:{
+    sort(field, by){
+      this.orderField = field
+      this.orderBy = by
+      this.data.sort((a, b) => {
+        const v1 = a[this.orderField]
+        const v2 = b[this.orderField]
+        if(typeof v1 === 'number'){
+          return this.orderBy === 'desc' ? (v2-v1) : (v1-v2)
+        } else {
+          return this.orderBy === 'desc' ? v2.localeCompare(v1) : v1.localeCompare(v2)
+
+        }
+      })
+
+    },
+    /**
+     * 反转排序
+     */
+    toggleSort(field){
+      const by = this.orderBy === 'desc'? 'asc' : 'desc'
+      this.sort(field, by)
+    }
   },
   computed: {
     columns () {
@@ -61,7 +86,7 @@ export default {
                   if (this.orderField === column.prop) {
                     orderArrow = (this.orderBy === 'desc') ? '⬇️' : '⬆️'
                   }
-                  return <th key={ column.label }>{ column.label } <span>{orderArrow}</span> </th>
+                  return <th key={ column.label } onClick={()=> this.toggleSort(column.prop)}>{ column.label } <span>{orderArrow}</span> </th>
                 } else {
                   return <th key={ column.label }>{ column.label } </th>
                 }
