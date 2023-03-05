@@ -103,6 +103,16 @@ export default [
     },
   },
   {
+    name: "KTable",
+    path: "/ktable",
+    component: getPageComponent(() =>
+      import(/* webpackChunkName: "message" */ "@//components/KTable/test.vue")
+    ),
+    meta: {
+      title: "留言板",
+    },
+  },
+  {
     name: "NotFound",
     path: "*",
     component: NotFound,
