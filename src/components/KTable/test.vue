@@ -4,6 +4,17 @@
       <k-table-column prop="date" label="日期" width="180"> </k-table-column>
       <k-table-column prop="name" label="姓名" width="180"> </k-table-column>
       <k-table-column prop="address" label="地址"> </k-table-column>
+      <k-table-column label="操作">
+        <template slot-scope="scope">
+          <button
+            size="mini"
+            @click="handleEdit(scope.$index, scope.row)">编辑</button>
+          <button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)">删除</button>
+        </template>
+      </k-table-column>
     </k-table>
   </div>
 </template>
