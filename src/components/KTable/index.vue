@@ -14,32 +14,25 @@ export default {
   computed: {
     columns () {
       // 由于不一定有prop属性，内部如果出现了默认作用域插槽，则按照它渲染
-      return this.$slots.default.map(({ data:{attrs, scopedSlots} }) => {
-        // console.log('columns',data)
-        const column = {...attrs}
+      return this.$slots.default.map((vnode) => {
+        console.log('columns vnode', vnode)
+        // 注意这个scopedSlots指的是在<k-table-culumn></k-table-culumn>中自定义的那个插槽内容
+        const { attrs, scopedSlots } = vnode.data;
+        const column = { ...attrs }
         if(scopedSlots){
-          column.renderCell = (row, i) => <div>{scopedSlots.default({row, $index, i})}</div>
+          column.renderCell = (row, i) => <div>{ scopedSlots.default({ row, $index: i }) }</div>
         } else {
-          column.renderCell = (row) => <div>{row[column.prop]}</div>
+          column.renderCell = (row) => <div>{ row[column.prop] }</div>
 
         }
         return column
-      })
+  })
 
-    },
-    rows () {
-      return this.data.map(item => {
-        const ret = {}
-        this.columns.forEach(column => {
-          ret[column.prop] = item[column.prop]
-        })
-        return ret
-      })
-    }
+},
   },
-  render () {
-    console.log('render')
-    return (
+render() {
+  console.log('render')
+  return (
     <table>
       <thead>
         <tr>
@@ -52,16 +45,19 @@ export default {
       </thead>
       <tbody>
         {
-          this.rows.map((row, index) => {
-            const tds = Object.keys(row).map(key => (
-              <td key={ key }>{ row[key] }</td>
-            ))
-            return <tr key={ index }>{ tds }</tr>
+          this.data.map((row, rowIndex) => {
+            return <tr key={ rowIndex }>{
+              this.columns.map((column, columnIndex) => {
+                return <td key={ columnIndex }>{ column.renderCell(row, rowIndex) }</td>
+              })
+            }
+            </tr>
+
           })
         }
       </tbody>
     </table>)
-  }
+}
 };
 </script>
 

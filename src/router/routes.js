@@ -105,11 +105,11 @@ export default [
   {
     name: "KTable",
     path: "/ktable",
-    component: getPageComponent(() =>
+    component: () =>
       import(/* webpackChunkName: "message" */ "@//components/KTable/test.vue")
-    ),
+    ,
     meta: {
-      title: "留言板",
+      title: "el-table测试",
     },
   },
   {
